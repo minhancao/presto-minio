@@ -38,6 +38,7 @@ echo "Setting up configuration..."
 sed -e 's/hadoop-master/127.0.0.1/' ${PRESTO_HOME}/etc/catalog/minio.properties | tee ${PRESTO_HOME}/etc/catalog/minio.properties
 echo ""
 
+
 # Cleanup of the copy and links except for the configuration in etc.
 rm -rf ${PRESTO_HOME}/bin
 rm -rf ${PRESTO_HOME}/lib
@@ -45,11 +46,42 @@ rm -rf ${PRESTO_HOME}/plugin
 rm -rf ${PRESTO_HOME}/NOTICE
 rm -rf ${PRESTO_HOME}/README.txt
 
+# Setting up etc for HiveHttpRunner (instead of presto-server)
+#if [ ! -d ${PRESTO_HOME}/hrunner-etc ]; then
+#    mkdir ${PRESTO_HOME}/hrunner-etc
+#fi
+
+if [ ! -d ${PRESTO_HOME}/velox-etc ]; then
+    mkdir ${PRESTO_HOME}/velox-etc
+fi
+
+#cp -rf ${SCRIPT_DIR}/presto/etc/* ${PRESTO_HOME}/hrunner-etc
+cp -rf ${SCRIPT_DIR}/presto/etc/* ${PRESTO_HOME}/velox-etc
+
+# Setting up the config for regular java presto-server
+cp ${PRESTO_HOME}/etc/config.properties.presto-server ${PRESTO_HOME}/etc/config.properties
+
+# Set up HiveRunner coordinator for use with Velox worker
+#cp ${PRESTO_HOME}/hrunner-etc/config.properties.hrunner ${PRESTO_HOME}/hrunner-etc/config.properties
+#cp ${PRESTO_HOME}/hrunner-etc/node.properties.hrunner ${PRESTO_HOME}/hrunner-etc/node.properties
+#rm ${PRESTO_HOME}/hrunner-etc/catalog/*
+#cp ${PRESTO_TOP}/presto-native-execution/etc/catalog/* ${PRESTO_HOME}/hrunner-etc/catalog/
+
+# Setting up the config for Velox worker
+# Velox worker listens on port 8082 - used for receiving work from the coordinator
+cp ${PRESTO_HOME}/velox-etc/config.properties.velox ${PRESTO_HOME}/velox-etc/config.properties
+cp ${PRESTO_HOME}/velox-etc/node.properties.velox ${PRESTO_HOME}/velox-etc/node.properties
+rm ${PRESTO_HOME}/velox-etc/catalog/*
+cp ${PRESTO_TOP}/presto-native-execution/etc/catalog/* ${PRESTO_HOME}/velox-etc/catalog/
+
+
 # Copy in bin dir (needed because the launcher will look at the config based on its actual location).
 # Copy in the presto-cli to communicate with the presto server.
 # Link in lib and other files.
 cp -r ${PRESTO_TOP}/presto-server/target/presto-server-*-SNAPSHOT/presto-server-*-SNAPSHOT/bin ${PRESTO_HOME}/bin
-cp -r ${PRESTO_TOP}/presto-cli/target/presto-cli-*-SNAPSHOT-executable.jar ${PRESTO_HOME}/bin/presto-cli
+cp ${PRESTO_TOP}/presto-cli/target/presto-cli-*-SNAPSHOT-executable.jar ${PRESTO_HOME}/bin/presto-cli
+cp ${SCRIPT_DIR}/bin/startHiveQueryRunner.sh ${PRESTO_HOME}/bin/startHiveQueryRunner.sh
+cp ${SCRIPT_DIR}/bin/startPrestoVeloxWorker.sh ${PRESTO_HOME}/bin/startPrestoVeloxWorker.sh
 ln -s ${PRESTO_TOP}/presto-server/target/presto-server-*-SNAPSHOT/presto-server-*-SNAPSHOT/lib ${PRESTO_HOME}/lib
 ln -s ${PRESTO_TOP}/presto-server/target/presto-server-*-SNAPSHOT/presto-server-*-SNAPSHOT/plugin ${PRESTO_HOME}/plugin
 ln -s ${PRESTO_TOP}/presto-server/target/presto-server-*-SNAPSHOT/presto-server-*-SNAPSHOT/NOTICE ${PRESTO_HOME}/NOTICE
