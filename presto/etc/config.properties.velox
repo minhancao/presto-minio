@@ -1,0 +1,4 @@
+presto.version=testversion
+http-server.http.port=7777
+discovery.uri=http://127.0.0.1:<replace_port>
+system-memory-gb=2
