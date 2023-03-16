@@ -20,4 +20,12 @@ if [ ! -z "${PORT_SET}" ]; then
     exit 1
 fi
 
-$PRESTO_TOP/presto-native-execution/presto_cpp/main/presto_server --logtostderr=1 --v=1 --etc_dir=${PRESTO_HOME}/velox-etc
+if [ -f "$PRESTO_TOP/presto-native-execution/presto_cpp/main/presto_server" ]; then
+    $PRESTO_TOP/presto-native-execution/presto_cpp/main/presto_server --logtostderr=1 --v=1 --etc_dir=${PRESTO_HOME}/velox-etc
+elif [ -f "$PRESTO_TOP/presto-native-execution/_build/debug/presto_cpp/main/presto_server" ]; then
+    $PRESTO_TOP/presto-native-execution/_build/debug/presto_cpp/main/presto_server --logtostderr=1 --v=1 --etc_dir=${PRESTO_HOME}/velox-etc
+elif [ -f "$PRESTO_TOP/presto-native-execution/_build/release/presto_cpp/main/presto_server" ]; then
+    $PRESTO_TOP/presto-native-execution/_build/release/presto_cpp/main/presto_server --logtostderr=1 --v=1 --etc_dir=${PRESTO_HOME}/velox-etc
+else
+    echo "Error: presto_server executable not found."
+fi
