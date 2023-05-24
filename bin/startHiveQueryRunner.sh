@@ -17,8 +17,19 @@ if [ ! -d "${PRESTO_HOME}/lib" ]; then
 fi
 
 
+# Find the presto_server executable - it could be in 3 locations depending on the how the build was done.
+if [ -e "${PRESTO_TOP}/presto-native-execution/_build/debug/presto_cpp/main/presto_server" ]; then
+    PRESTO_SERVER_VAL=${PRESTO_TOP}/presto-native-execution/presto_cpp/main/presto_server
+elif [ -e "${PRESTO_TOP}/presto-native-execution/_build/release/presto_cpp/main/presto_server" ]; then
+    PRESTO_SERVER_VAL=${PRESTO_TOP}/presto-native-execution/presto_cpp/main/presto_server
+elif [ -e "${PRESTO_TOP}/presto-native-execution/presto_cpp/main/presto_server" ]; then
+    PRESTO_SERVER_VAL=${PRESTO_TOP}/presto-native-execution/presto_cpp/main/presto_server
+else
+    echo "Could not find the presto_server executable. Please rebuild."
+    exit 1
+fi
 
-export PRESTO_SERVER=${PRESTO_TOP}/presto-native-execution/presto_cpp/main/presto_server
+export PRESTO_SERVER=${PRESTO_SERVER_VAL}
 export DATA_DIR=${PRESTO_HOME}/data
 export WORKER_COUNT=0
 
@@ -66,4 +77,4 @@ for filename in ${JARS}; do
 done
 set +f; unset IFS
 
-java -ea -Xmx5G -XX:+ExitOnOutOfMemoryError -Duser.timezone=America/Bahia_Banderas -Dhive.security=legacy -classpath "${CLASSPATH}" com.facebook.presto.hive.HiveExternalWorkerQueryRunner 
+java -ea -Xmx5G -XX:+ExitOnOutOfMemoryError -Duser.timezone=America/Bahia_Banderas -Dhive.security=legacy -classpath "${CLASSPATH}" com.facebook.presto.nativeworker.HiveExternalWorkerQueryRunner
