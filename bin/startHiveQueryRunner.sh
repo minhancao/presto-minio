@@ -77,4 +77,4 @@ for filename in ${JARS}; do
 done
 set +f; unset IFS
 
-java -ea -Xmx5G -XX:+ExitOnOutOfMemoryError -Duser.timezone=America/Bahia_Banderas -Dhive.security=legacy -DDATA_DIR="${DATADIR}" -classpath "${CLASSPATH}" com.facebook.presto.nativeworker.HiveExternalWorkerQueryRunner
+java -ea -Xmx5G -XX:+ExitOnOutOfMemoryError -Duser.timezone=America/Bahia_Banderas -Dhive.security=legacy -DDATA_DIR="${DATA_DIR}" -classpath "${CLASSPATH}" com.facebook.presto.nativeworker.HiveExternalWorkerQueryRunner
