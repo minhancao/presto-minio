@@ -49,6 +49,7 @@ ${PRESTO_TOP}/presto-parquet/target/classes:\
 ${PRESTO_TOP}/presto-cache/target/classes:\
 ${PRESTO_TOP}/presto-rcfile/target/classes:\
 ${HOME}/.m2/repository/io/airlift/tpch/tpch/0.10/tpch-0.10.jar:\
+${HOME}/.m2/repository/com/teradata/tpcds/tpcds/1.2/tpcds-1.2.jar:\
 ${HOME}/.m2/repository/org/apache/thrift/libthrift/0.9.3/libthrift-0.9.3.jar:\
 ${HOME}/.m2/repository/org/apache/hudi/hudi-presto-bundle/0.12.0/hudi-presto-bundle-0.12.0.jar:\
 ${HOME}/.m2/repository/com/google/cloud/bigdataoss/gcs-connector/hadoop2-1.9.17/gcs-connector-hadoop2-1.9.17.jar:\
