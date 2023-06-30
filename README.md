@@ -52,11 +52,11 @@ The main change is to the `fs.s3a.endpoint` to point to the fixed local MinIO se
 Follow the example to create a table (in memory) to be used in Hive for later use in Presto.
 
 
-# Other Docker setups
-## Presto coordinator, Presto worker, Hive, MinIO setup:
+## Other Docker setups
+### Presto coordinator, Presto worker, Hive, MinIO setup:
 Use the `docker-compose-java-worker.yml` and rename/overwrite it to `docker-compose.yml` and then just run `docker-compose up -d` to use this Docker setup
 
-## Presto coordinator, Prestissimo worker, Hive, MinIO setup:
+### Presto coordinator, Prestissimo worker, Hive, MinIO setup:
 Use the `docker-compose-velox-worker.yml` and rename/overwrite it to `docker-compose.yml` and then just run `docker-compose up -d` to use this Docker setup
 
 
