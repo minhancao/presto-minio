@@ -54,10 +54,10 @@ Follow the example to create a table (in memory) to be used in Hive for later us
 
 # Other Docker setups
 ## Presto coordinator, Presto worker, Hive, MinIO setup:
-Use the `docker-compose-java-worker.yml` and rename/overwrite it to `docker-compose.yml` and then just run `docker-compose up -d` to bring up and use this Docker setup
+Use the `docker-compose-java-worker.yml` and rename/overwrite it to `docker-compose.yml` and then just run `docker-compose up -d` to use this Docker setup
 
 ## Presto coordinator, Prestissimo worker, Hive, MinIO setup:
-Use the `docker-compose-velox-worker.yml` and rename/overwrite it to `docker-compose.yml` and then just run `docker-compose up -d` to bring up and use this Docker setup
+Use the `docker-compose-velox-worker.yml` and rename/overwrite it to `docker-compose.yml` and then just run `docker-compose up -d` to use this Docker setup
 
 
 # Example
