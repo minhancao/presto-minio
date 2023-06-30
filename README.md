@@ -7,6 +7,8 @@ The changes between this fork and the upstream repo are as follwos:
 2. Setting the local S3 storage up for use by Hive and Presto.
 3. Switch Starburst Presto for the Ahana Presto sandbox.
 4. Use a new Hive image (hive3.1-hive:10)
+5. Added a new Docker setup with: Presto coordinator, Presto worker, Hive, MinIO
+6. Added a new Docker setup with: Presto coordinator, Prestissimo worker, Hive, MinIO
 
 
 ## Prereq
@@ -48,6 +50,15 @@ presto/minio.properties
 The main change is to the `fs.s3a.endpoint` to point to the fixed local MinIO setup.
 
 Follow the example to create a table (in memory) to be used in Hive for later use in Presto.
+
+
+## Other Docker setups
+### Presto coordinator, Presto worker, Hive, MinIO setup:
+Use the `docker-compose-java-worker.yml` and rename/overwrite it to `docker-compose.yml` and then just run `docker-compose up -d` to use this Docker setup
+
+### Presto coordinator, Prestissimo worker, Hive, MinIO setup:
+Use the `docker-compose-velox-worker.yml` and rename/overwrite it to `docker-compose.yml` and then just run `docker-compose up -d` to use this Docker setup
+
 
 # Example
 First create a table in the Hive metastore. Note that the location `'s3a://customer-data-text/'` points to data that already exists in the Minio container.
