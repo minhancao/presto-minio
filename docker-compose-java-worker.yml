@@ -50,6 +50,10 @@ services:
       - ./prestissimo/catalog/jmx.properties:/opt/presto-server/etc/catalog/jmx.properties
       - ./prestissimo/catalog/tpcds.properties:/opt/presto-server/etc/catalog/tpcds.properties
       - ./prestissimo/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties
+      - ./presto/etc/catalog/minio.properties:/opt/presto-server/etc/catalog/minio.properties
+    depends_on:
+      - minio
+      - hadoop
     environment:
       - AWS_ACCESS_KEY=FEEF05540F5D8BE7EB62
       - AWS_SECRET_ACCESS_KEY=2509758e5a6160ddf8c3014651b64006eec5213a
@@ -81,12 +85,31 @@ services:
       - ./prestissimo/catalog/jmx.properties:/opt/presto-server/etc/catalog/jmx.properties
       - ./prestissimo/catalog/tpcds.properties:/opt/presto-server/etc/catalog/tpcds.properties
       - ./prestissimo/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties
+      - ./presto/etc/catalog/minio.properties:/opt/presto-server/etc/catalog/minio.properties
+    depends_on:
+      - minio
+      - hadoop
     environment:
       - AWS_ACCESS_KEY=FEEF05540F5D8BE7EB62
       - AWS_SECRET_ACCESS_KEY=2509758e5a6160ddf8c3014651b64006eec5213a
     networks:
       presto:
         ipv4_address: 172.19.0.11
+  mc-job:
+    image: 'minio/mc:latest'
+    environment:
+      MC_HOST_presto: "http://minioadmin:minioadmin@172.19.0.2:9000"
+    volumes:
+      - './minio/data:/minio'
+    depends_on:
+      - minio
+      - hadoop
+    entrypoint: |
+      /bin/bash -c "
+      /usr/bin/mc mb presto/customer-data-text;
+      /usr/bin/mc mb presto/customer-data-orc;
+      /usr/bin/mc mirror minio/customer-data-text presto/customer-data-text;
+      "
 networks:
   presto:
     driver: bridge
