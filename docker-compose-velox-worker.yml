@@ -79,7 +79,6 @@ services:
     volumes:
       - ./prestissimo/coordinator/log.properties:/opt/presto-server/etc/log.properties
       - ./prestissimo/workers/1/config_velox.properties:/opt/presto-server/etc/config.properties
-      - ./prestissimo/workers/jvm.config:/opt/presto-server/etc/jvm.config
       - ./prestissimo/workers/1/node_velox.properties:/opt/presto-server/etc/node.properties
       # - ./prestissimo/catalog/jmx.properties:/opt/presto-server/etc/catalog/jmx.properties
       # - ./prestissimo/catalog/tpcds.properties:/opt/presto-server/etc/catalog/tpcds.properties
