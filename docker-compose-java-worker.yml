@@ -87,9 +87,6 @@ services:
       - ./prestissimo/catalog/tpcds.properties:/opt/presto-server/etc/catalog/tpcds.properties
       - ./prestissimo/catalog/tpch.properties:/opt/presto-server/etc/catalog/tpch.properties
       - ./presto/etc/catalog/minio.properties:/opt/presto-server/etc/catalog/minio.properties
-    depends_on:
-      - minio
-      - hadoop
     environment:
       - AWS_ACCESS_KEY=FEEF05540F5D8BE7EB62
       - AWS_SECRET_ACCESS_KEY=2509758e5a6160ddf8c3014651b64006eec5213a

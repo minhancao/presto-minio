@@ -41,7 +41,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: 8G
     ports:
       - 8080:8080
     volumes:
@@ -76,7 +76,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2G
+          memory: 8G
     volumes:
       - ./prestissimo/coordinator/log.properties:/opt/presto-server/etc/log.properties
       - ./prestissimo/workers/1/config_velox.properties:/opt/presto-server/etc/config.properties
